@@ -1,0 +1,7 @@
+node_modules/
+movies/
+*.mp4
+*.mkv
+*.avi
+*.mov
+cloudflared

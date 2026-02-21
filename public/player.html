@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch Party — Player</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="player-page">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="room-info">
+      <span id="room-label">Connecting...</span>
+      <button id="copy-btn" class="btn-icon" title="Copy room code">📋</button>
+    </div>
+    <span id="sync-status" class="sync-badge">⏳ Waiting</span>
+    <span id="viewer-name" class="viewer-name"></span>
+  </div>
+
+  <!-- Movie selector (host only) -->
+  <div id="movie-selector" class="movie-selector hidden">
+    <label for="movie-select">Select movie:</label>
+    <select id="movie-select">
+      <option value="">— Choose a file —</option>
+    </select>
+  </div>
+
+  <!-- Main area: video + chat side by side -->
+  <div class="main-area">
+
+    <!-- Left: video + controls -->
+    <div class="video-col">
+      <div class="video-wrap">
+        <video id="video" playsinline preload="metadata"></video>
+        <div id="no-movie" class="no-movie-msg">
+          <span id="waiting-msg">Waiting for host to select a movie...</span>
+        </div>
+      </div>
+      <div class="controls">
+        <button id="play-pause-btn" class="btn-ctrl" disabled>▶</button>
+        <span id="current-time" class="time">0:00</span>
+        <input type="range" id="seek-bar" class="seek-bar" value="0" min="0" step="0.1" disabled>
+        <span id="duration" class="time">0:00</span>
+        <span id="volume-wrap">
+          <button id="mute-btn" class="btn-ctrl">🔊</button>
+          <input type="range" id="volume-bar" class="volume-bar" value="100" min="0" max="100">
+        </span>
+      </div>
+    </div>
+
+    <!-- Right: chat -->
+    <div class="chat-section">
+      <div class="chat-header">Chat</div>
+      <div id="chat-log" class="chat-log"></div>
+      <div class="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Say something..." maxlength="200">
+        <button id="chat-send" class="btn secondary small">Send</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

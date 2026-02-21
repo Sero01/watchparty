@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch Party</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="lobby">
+    <h1>🎬 Watch Party</h1>
+    <p class="subtitle">Watch movies together, in sync</p>
+
+    <div class="card">
+      <h2>Create a Room</h2>
+      <input type="text" id="host-name" placeholder="Your name" maxlength="20">
+      <button id="create-btn" class="btn primary">Create Room</button>
+    </div>
+
+    <div class="divider">or</div>
+
+    <div class="card">
+      <h2>Join a Room</h2>
+      <input type="text" id="guest-name" placeholder="Your name" maxlength="20">
+      <input type="text" id="room-code" placeholder="Room code (e.g. AB12CD)" maxlength="6"
+             style="text-transform:uppercase">
+      <button id="join-btn" class="btn secondary">Join Room</button>
+      <p id="join-error" class="error hidden"></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('create-btn').addEventListener('click', () => {
+      const name = document.getElementById('host-name').value.trim() || 'Host';
+      sessionStorage.setItem('name', name);
+      window.location.href = `/player.html?host=1&name=${encodeURIComponent(name)}`;
+    });
+
+    document.getElementById('join-btn').addEventListener('click', () => {
+      const name = document.getElementById('guest-name').value.trim() || 'Guest';
+      const code = document.getElementById('room-code').value.trim().toUpperCase();
+      if (code.length < 4) {
+        document.getElementById('join-error').textContent = 'Enter a valid room code';
+        document.getElementById('join-error').classList.remove('hidden');
+        return;
+      }
+      sessionStorage.setItem('name', name);
+      window.location.href = `/player.html?room=${code}&name=${encodeURIComponent(name)}`;
+    });
+
+    // Allow Enter key to submit
+    document.getElementById('room-code').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('join-btn').click();
+    });
+    document.getElementById('host-name').addEventListener('keydown', e => {
+      if (e.key === 'Enter') document.getElementById('create-btn').click();
+    });
+  </script>
+</body>
+</html>
